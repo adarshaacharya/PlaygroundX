@@ -1,6 +1,7 @@
 import React from 'react';
 import * as esbuild from 'esbuild-wasm';
 import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
+import { fetchPlugin } from './plugins/fetch-plugin';
 
 function App() {
   const ref = React.useRef<any>();
@@ -25,18 +26,18 @@ function App() {
     if (!ref.current) {
       return;
     }
-    // tell esbuild to bundle code
+
+    // tell esbuild to bundle code and put it in index.js file
     const result = await esbuild.build({
       entryPoints: ['index.js'],
       bundle: true,
       write: false,
-      plugins: [unpkgPathPlugin()],
+      plugins: [unpkgPathPlugin(), fetchPlugin(input)], // intercepting with plugins while bulding by esbuild
       define: {
         'process.env.NODE_ENV': '"production"',
         global: 'window',
       },
     });
-    console.log(result);
     setCode(result.outputFiles[0].text);
   };
 
