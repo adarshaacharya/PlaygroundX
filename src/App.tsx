@@ -3,6 +3,7 @@ import * as esbuild from 'esbuild-wasm';
 import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
 import { fetchPlugin } from './plugins/fetch-plugin';
 import CodeEditor from './components/CodeEditor';
+import { UNPKG_URL } from './consts';
 
 const initialValue = `import React from 'react';
 import ReactDOM from 'react-dom';
@@ -24,7 +25,7 @@ function App() {
   const startService = async () => {
     await esbuild.initialize({
       worker: true,
-      wasmURL: 'https://unpkg.com/esbuild-wasm/esbuild.wasm',
+      wasmURL: `${UNPKG_URL}/esbuild-wasm/esbuild.wasm`,
     });
 
     ref.current = true;

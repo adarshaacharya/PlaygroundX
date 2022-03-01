@@ -3,6 +3,7 @@ import MonacoEditor, { EditorProps, OnMount } from '@monaco-editor/react';
 import prettier from 'prettier';
 import parser from 'prettier/parser-babel';
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+import './CodeEditor.css';
 
 const editorConfig: EditorProps = {
   value: '// Type your code here',
@@ -45,26 +46,30 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
     const unFormatted = editorRef.current?.getModel()?.getValue();
 
     if (unFormatted) {
-      const formatted = prettier.format(unFormatted, {
-        parser: 'babel',
-        plugins: [parser],
-        useTabs: false,
-        semi: true,
-        singleQuote: true,
-      });
+      const formatted = prettier
+        .format(unFormatted, {
+          parser: 'babel',
+          plugins: [parser],
+          useTabs: false,
+          semi: true,
+          singleQuote: true,
+        })
+        .replace(/\n$/, '');
 
       editorRef.current?.setValue(formatted);
     }
   };
 
   return (
-    <React.Fragment>
-      <button onClick={onFormatClick}>Format Code</button>
+    <div className="editor-wrapper">
+      <button className="btn btn-format" onClick={onFormatClick}>
+        Format Code
+      </button>
       <MonacoEditor
         onMount={onEditorDidMount}
         {...{ ...editorConfig, value: initialValue }}
       />
-    </React.Fragment>
+    </div>
   );
 };
 
