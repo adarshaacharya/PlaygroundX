@@ -2,11 +2,24 @@ import React from 'react';
 import * as esbuild from 'esbuild-wasm';
 import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
 import { fetchPlugin } from './plugins/fetch-plugin';
+import CodeEditor from './components/CodeEditor';
+
+const initialValue = `import React from 'react';
+import ReactDOM from 'react-dom';
+
+const App = () => {
+  return (
+    <h1>Hello to react editor</h1>
+  )
+}
+
+ReactDOM.render(<App />, document.querySelector('#root'));
+`;
 
 function App() {
   const ref = React.useRef<any>();
   const iframe = React.useRef<any>();
-  const [input, setInput] = React.useState('');
+  const [input, setInput] = React.useState(initialValue);
 
   const startService = async () => {
     await esbuild.initialize({
@@ -68,12 +81,10 @@ function App() {
 
   return (
     <div>
-      <textarea
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        rows={10}
-        cols={20}
-      ></textarea>
+      <CodeEditor
+        initialValue={initialValue}
+        onChange={(value) => setInput(value)}
+      />
       <div>
         <button onClick={onClick}>Submit</button>
       </div>
