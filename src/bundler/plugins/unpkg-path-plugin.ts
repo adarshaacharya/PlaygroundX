@@ -1,5 +1,5 @@
 import * as esbuild from 'esbuild-wasm';
-import { UNPKG_URL } from '../consts';
+import { UNPKG_URL } from '../../consts';
 
 
 export const unpkgPathPlugin = () => {

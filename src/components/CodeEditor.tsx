@@ -33,7 +33,7 @@ interface CodeEditorProps {
 const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor>();
 
-  const onEditorDidMount: OnMount = (editor, monaco) => {
+  const onEditorDidMount: OnMount = (editor) => {
     editorRef.current = editor;
     editor.onDidChangeModelContent(() => {
       onChange(editor.getValue());
