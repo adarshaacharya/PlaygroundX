@@ -15,10 +15,24 @@ npm view react dist.tarball
 // first on lead then only on resolve
 
 Problems : 
-Transform/Transpile
-Build / Bundle Code
-Fetch the npm package w/o file system
-Caching the fetching process from unpkgLoading CSS support for bundler
+- Transform/Transpile
+- Build / Bundle Code
+- Fetch the npm package w/o file system
+- Caching the fetching process from unpkgLoading CSS support for bundler
+
+
+
+Error Handling Problems :
+- Handle syntax error
+- mutate the dom
+- User might accidently run mailicous code
+
+
+- Disallow communication between parent and child iframe
+- Codepen, codesandbox load iframe from different domain (check using devtools)
+- Refresh iframe everytime we type code so that it refresh all global vairable
+
+
 
 /**
  * NOTE : 
