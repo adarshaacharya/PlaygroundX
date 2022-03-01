@@ -1,8 +1,7 @@
-import MonacoEditor, {
-  EditorProps,
-  Monaco,
-  OnMount,
-} from '@monaco-editor/react';
+import React, { useRef } from 'react';
+import MonacoEditor, { EditorProps, OnMount } from '@monaco-editor/react';
+import prettier from 'prettier';
+import parser from 'prettier/parser-babel';
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 
 const editorConfig: EditorProps = {
@@ -31,7 +30,10 @@ interface CodeEditorProps {
 }
 
 const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
+  const editorRef = useRef<monaco.editor.IStandaloneCodeEditor>();
+
   const onEditorDidMount: OnMount = (editor, monaco) => {
+    editorRef.current = editor;
     editor.onDidChangeModelContent(() => {
       onChange(editor.getValue());
     });
@@ -39,11 +41,30 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
     editor.getModel()?.updateOptions({ tabSize: 2 });
   };
 
+  const onFormatClick = () => {
+    const unFormatted = editorRef.current?.getModel()?.getValue();
+
+    if (unFormatted) {
+      const formatted = prettier.format(unFormatted, {
+        parser: 'babel',
+        plugins: [parser],
+        useTabs: false,
+        semi: true,
+        singleQuote: true,
+      });
+
+      editorRef.current?.setValue(formatted);
+    }
+  };
+
   return (
-    <MonacoEditor
-      onMount={onEditorDidMount}
-      {...{ ...editorConfig, value: initialValue }}
-    />
+    <React.Fragment>
+      <button onClick={onFormatClick}>Format Code</button>
+      <MonacoEditor
+        onMount={onEditorDidMount}
+        {...{ ...editorConfig, value: initialValue }}
+      />
+    </React.Fragment>
   );
 };
 
