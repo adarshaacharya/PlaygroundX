@@ -8,7 +8,7 @@ let waiting: Promise<void>;
 export const setupBundler = () => {
   waiting = esbuild.initialize({
     worker: true,
-    wasmURL: `${UNPKG_URL}/esbuild-wasm/esbuild.wasm`,
+    wasmURL: `${UNPKG_URL}/esbuild-wasm@0.14.23/esbuild.wasm`, // specifying version is important as it should match with package installed
   });
 };
 
