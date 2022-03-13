@@ -3,13 +3,19 @@ import CodeEditor from './components/CodeEditor';
 import Preview from './components/Preview';
 import { bundler, setupBundler } from './bundler';
 import { editorInitialValue as initialValue } from './consts';
+import Resizable from './components/Resizable';
+import './index.css';
 
 const App = () => {
   const [input, setInput] = React.useState(initialValue);
   const [code, setCode] = React.useState<any>();
 
+  const intializeBundler = async () => {
+    await setupBundler();
+  };
+
   React.useEffect(() => {
-    setupBundler();
+    intializeBundler();
   }, []);
 
   const onClick = async () => {
@@ -18,15 +24,15 @@ const App = () => {
   };
 
   return (
-    <div>
-      <CodeEditor
-        initialValue={initialValue}
-        onChange={(value) => setInput(value)}
-      />
-      <div>
-        <button onClick={onClick}>Submit</button>
-      </div>
+    <div className="app">
+      <Resizable direction="horizontal">
+        <CodeEditor
+          initialValue={initialValue}
+          onChange={(value) => setInput(value)}
+        />
+      </Resizable>
 
+      <button onClick={onClick}> Run code</button>
       <Preview code={code} />
     </div>
   );
