@@ -10,6 +10,17 @@ const App = () => {
   const [input, setInput] = React.useState(initialValue);
   const [code, setCode] = React.useState<any>();
 
+  React.useEffect(() => {
+    const timer = setTimeout(async () => {
+      const result = await bundler(input);
+      setCode(result);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [input]);
+
   const intializeBundler = async () => {
     await setupBundler();
   };
@@ -17,11 +28,6 @@ const App = () => {
   React.useEffect(() => {
     intializeBundler();
   }, []);
-
-  const onClick = async () => {
-    const result = await bundler(input);
-    setCode(result);
-  };
 
   return (
     <div className="app">
@@ -32,7 +38,6 @@ const App = () => {
         />
       </Resizable>
 
-      <button onClick={onClick}> Run code</button>
       <Preview code={code} />
     </div>
   );

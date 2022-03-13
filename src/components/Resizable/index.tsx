@@ -7,12 +7,43 @@ interface ResizableProps {
 }
 
 const Resizable: React.FC<ResizableProps> = ({ direction, children }) => {
+  const [innerWidth, setInnerWidth] = React.useState(window.innerWidth);
+  const [innerHeight, setInnerHeight] = React.useState(window.innerHeight);
+  const [width, setWidth] = React.useState(window.innerWidth * 0.75);
+
+  React.useEffect(() => {
+    let timer: NodeJS.Timer;
+
+    const listener = () => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+
+      timer = setTimeout(() => {
+        setInnerWidth(window.innerWidth);
+        setInnerHeight(window.innerHeight);
+
+        if (window.innerWidth * 0.75 < width) {
+          setWidth(window.innerWidth * 0.75);
+        }
+      }, 100);
+    };
+    window.addEventListener('resize', listener);
+
+    return () => {
+      window.removeEventListener('resize', listener);
+    };
+  }, [width]);
+
   const resizableProps: ResizableBoxProps = {
+    onResizeStop: (event, data) => {
+      setWidth(data.size.width);
+    },
     className: 'resize-horizontal',
-    minConstraints: [window.innerWidth * 0.2, 24], // horizonal, vertical resizing
-    maxConstraints: [window.innerWidth * 0.75, Infinity],
+    minConstraints: [innerWidth * 0.2, Infinity], // horizonal, vertical resizing
+    maxConstraints: [innerWidth * 0.75, Infinity],
     height: Infinity,
-    width: window.innerWidth * 0.75, // determines width of editor
+    width, // determines width of editor too
     resizeHandles: ['e'],
   };
 
