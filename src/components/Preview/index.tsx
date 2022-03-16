@@ -7,14 +7,24 @@ const html = `
     <body> 
     <div id="root"></div>
       <script> 
+        const handleError = (err) => {
+          const root = document.querySelector('#root');
+          root.innerHTML = '<div style="color : red;"><h4>Runtime Error</h4>' + err + '</div>';
+          console.error(err);
+        }
+
+        // handle async aka catch block uncaught error
+        window.addEventListener('error', (event) => {
+          event.preventDefault();
+          handleError(event.error)
+        })
+
       // receive bundled code from parent
         window.addEventListener('message', (event) => {
           try {
             eval(event.data);
           } catch(err) {
-            const root = document.querySelector('#root');
-            root.innerHTML = '<div style="color : red;"><h4>Runtime Error</h4>' + err + '</div>';
-            console.error(err);
+            handleError(err)
           }
         }, false)
       </script>
@@ -23,10 +33,11 @@ const html = `
 `;
 
 interface PreviewProps {
-  code: string;
+  code?: string;
+  error: string;
 }
 
-const Preview: React.FC<PreviewProps> = ({ code }) => {
+const Preview: React.FC<PreviewProps> = ({ code, error }) => {
   const iframe = React.useRef<any>();
 
   React.useEffect(() => {
@@ -39,6 +50,7 @@ const Preview: React.FC<PreviewProps> = ({ code }) => {
     }, 50);
   }, [code]);
 
+  console.log(error);
   return (
     <div className="preview-wrapper">
       <iframe
@@ -47,6 +59,7 @@ const Preview: React.FC<PreviewProps> = ({ code }) => {
         srcDoc={html}
         title="Preview"
       />
+      {error && <p className="preview-error">{error}</p>}
     </div>
   );
 };

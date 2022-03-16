@@ -28,8 +28,14 @@ export const bundler = async (rawCode: string) => {
       },
     });
 
-    return result.outputFiles[0].text;
-  } catch (error) {
-    console.error(error);
+    return {
+      code: result.outputFiles[0].text,
+      err: '',
+    };
+  } catch (error: any) {
+    return {
+      code: '',
+      err: error.message,
+    };
   }
 };

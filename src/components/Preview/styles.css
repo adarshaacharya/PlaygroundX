@@ -8,3 +8,10 @@
   width: 100%;
   background-color: white;
 }
+
+.preview-error {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: red;
+}

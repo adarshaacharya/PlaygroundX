@@ -8,12 +8,14 @@ import './index.css';
 
 const App = () => {
   const [input, setInput] = React.useState(initialValue);
-  const [code, setCode] = React.useState<any>();
+  const [code, setCode] = React.useState<string>();
+  const [error, setError] = React.useState('');
 
   React.useEffect(() => {
     const timer = setTimeout(async () => {
       const result = await bundler(input);
-      setCode(result);
+      setCode(result.code);
+      setError(result.err); // bundling error
     }, 1000);
 
     return () => {
@@ -38,7 +40,7 @@ const App = () => {
         />
       </Resizable>
 
-      <Preview code={code} />
+      <Preview code={code} error={error} />
     </div>
   );
 };

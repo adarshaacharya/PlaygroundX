@@ -38,3 +38,9 @@ Error Handling Problems :
  * NOTE : 
  * bundling = build = finding some file, loading it, transpiling it, joining bunch of diff file together
  */
+
+
+ Three errors :
+ - BUndling/ syntax error
+ - syncrhonous error during execution 
+ - asynchronous error
