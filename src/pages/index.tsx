@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import CodeEditor from '../components/CodeEditor';
 import Preview from '../components/Preview';
 import { bundler, setupBundler } from '../bundler';
-import { editorInitialValue as initialValue } from '../consts';
+import { editorInitialValue as initialValue } from '../constants';
 
 const Resizable = dynamic(() => import('../components/Resizable'), {
   ssr: false,
