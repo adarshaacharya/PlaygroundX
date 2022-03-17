@@ -1,12 +1,12 @@
 import Head from 'next/head';
 import React from 'react';
 import dynamic from 'next/dynamic';
-import CodeEditor from '../components/CodeEditor';
-import Preview from '../components/Preview';
+import CodeEditor from '../components/CodeEditor/CodeEditor';
+import Preview from '../components/Preview/Preview';
 import { bundler, setupBundler } from '../bundler';
 import { editorInitialValue as initialValue } from '../constants';
 
-const Resizable = dynamic(() => import('../components/Resizable'), {
+const Resizable = dynamic(() => import('../components/Resizable/Resizable'), {
   ssr: false,
 });
 
@@ -27,12 +27,8 @@ const Home = () => {
     };
   }, [input]);
 
-  const intializeBundler = async () => {
-    await setupBundler();
-  };
-
   React.useEffect(() => {
-    intializeBundler();
+    setupBundler();
   }, []);
 
   return (
