@@ -4,11 +4,20 @@ import dynamic from 'next/dynamic';
 import CodeEditor from '../components/CodeEditor/CodeEditor';
 import Preview from '../components/Preview/Preview';
 import { bundler, setupBundler } from '../bundler';
-import { editorInitialValue as initialValue } from '../constants';
 
 const Resizable = dynamic(() => import('../components/Resizable/Resizable'), {
   ssr: false,
 });
+
+const initialValue = `import React from 'react';
+import ReactDOM from 'react-dom';
+
+const App = () => {
+  return <h1>Hello to react editor</h1>;
+}
+
+ReactDOM.render(<App />, document.querySelector('#root'));
+`;
 
 const Home = () => {
   const [input, setInput] = React.useState(initialValue);
