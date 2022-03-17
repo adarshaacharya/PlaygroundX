@@ -3,3 +3,63 @@
   display: flex;
   flex-direction: row;
 }
+
+.editor-wrapper {
+  position: relative;
+  height: 100%;
+  width: calc(100% - 10px);
+}
+
+.editor-wrapper .btn-format {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 20;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.editor-wrapper:hover .btn-format {
+  opacity: 1;
+}
+
+
+
+.preview-wrapper {
+  position: relative;
+  flex-grow: 1;
+}
+
+.preview-wrapper iframe {
+  height: 100%;
+  width: 100%;
+  background-color: white;
+}
+
+.preview-error {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: red;
+}
+
+
+.react-resizable-handle {
+  display: block;
+  background-color: #37414b;
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+
+.react-resizable-handle-e {
+  width: 10px;
+  min-width: 10px;
+  height: 100%;
+  cursor: col-resize;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
+}
+
+.resize-horizontal {
+  display: flex;
+  flex-direction: row;
+}

@@ -1,6 +1,5 @@
 import { ResizableBox, ResizableBoxProps } from 'react-resizable';
 import React from 'react';
-import './styles.css';
 
 interface ResizableProps {
   direction?: 'horizontal' | 'vertical';

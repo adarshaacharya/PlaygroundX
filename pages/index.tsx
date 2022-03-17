@@ -1,10 +1,14 @@
 import Head from 'next/head';
 import React from 'react';
+import dynamic from 'next/dynamic';
 import CodeEditor from '../components/CodeEditor';
 import Preview from '../components/Preview';
 import { bundler, setupBundler } from '../bundler';
 import { editorInitialValue as initialValue } from '../consts';
-import Resizable from '../components/Resizable';
+
+const Resizable = dynamic(() => import('../components/Resizable'), {
+  ssr: false,
+});
 
 const Home = () => {
   const [input, setInput] = React.useState(initialValue);
