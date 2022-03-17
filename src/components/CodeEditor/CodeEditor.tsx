@@ -3,7 +3,6 @@ import MonacoEditor, { EditorProps, OnMount } from '@monaco-editor/react';
 import prettier from 'prettier';
 import parser from 'prettier/parser-babel';
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
-import './style.css';
 
 const editorConfig: EditorProps = {
   value: '// Type your code here',
