@@ -9,7 +9,7 @@ const html = `
         const handleError = (err) => {
           const root = document.querySelector('#root');
           root.innerHTML = '<div style="color : red;"><h4>Runtime Error</h4>' + err + '</div>';
-          console.error(err);
+          console.error(err); 
         }
 
         // handle async aka catch block uncaught error
@@ -18,7 +18,7 @@ const html = `
           handleError(event.error)
         })
 
-      // receive bundled code from parent
+      // receive bundled code from parent document
         window.addEventListener('message', (event) => {
           try {
             eval(event.data);
@@ -43,13 +43,12 @@ const Preview: React.FC<PreviewProps> = ({ code, error }) => {
     // on every submit recreate content of iframe and put html
     iframe.current.srcdoc = html;
 
-    // whenever bundling happends on parent , it passes the msg to the child iframe
+    // whenever bundling happends on code , pass the data to iframe
     setTimeout(() => {
       iframe.current.contentWindow.postMessage(code, '*');
     }, 50);
   }, [code]);
 
-  console.log(error);
   return (
     <div className="preview-wrapper">
       <iframe

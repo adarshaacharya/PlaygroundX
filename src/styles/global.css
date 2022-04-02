@@ -24,8 +24,6 @@
   opacity: 1;
 }
 
-
-
 .preview-wrapper {
   position: relative;
   flex-grow: 1;
@@ -44,7 +42,9 @@
   color: red;
 }
 
-
+/*======================================
+  Component : Resizable
+=======================================*/
 .react-resizable-handle {
   display: block;
   background-color: #37414b;

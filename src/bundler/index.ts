@@ -6,10 +6,14 @@ import { unpkgPathPlugin } from './plugins/unpkg-path-plugin';
 let waiting: Promise<void>;
 
 export const setupBundler = () => {
-  waiting = esbuild.initialize({
-    worker: true,
-    wasmURL: `${UNPKG_URL}/esbuild-wasm@0.14.23/esbuild.wasm`, // specifying version is important as it should match with package installed
-  });
+  try {
+    waiting = esbuild.initialize({
+      worker: true,
+      wasmURL: `${UNPKG_URL}/esbuild-wasm@0.14.23/esbuild.wasm`, // specifying version is important as it should match with package installed
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const bundler = async (rawCode: string) => {

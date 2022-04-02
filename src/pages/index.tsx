@@ -1,11 +1,11 @@
 import Head from 'next/head';
 import React from 'react';
 import dynamic from 'next/dynamic';
-import CodeEditor from '../components/CodeEditor/CodeEditor';
-import Preview from '../components/Preview/Preview';
+import CodeEditor from '../components/CodeEditor';
+import Preview from '../components/Preview';
 import { bundler, setupBundler } from '../bundler';
 
-const Resizable = dynamic(() => import('../components/Resizable/Resizable'), {
+const Resizable = dynamic(() => import('../components/Resizable'), {
   ssr: false,
 });
 
@@ -45,7 +45,7 @@ const Home = () => {
       <Head>
         <title>Code Playground</title>
       </Head>
-      <Resizable direction="horizontal">
+      <Resizable>
         <CodeEditor
           initialValue={initialValue}
           onChange={(value) => setInput(value)}

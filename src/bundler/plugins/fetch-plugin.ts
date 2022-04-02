@@ -19,9 +19,9 @@ export const fetchPlugin = (inputCode: string) => {
           loader: 'jsx',
           contents: inputCode,
         };
-      });
-
-      build.onLoad({ filter: /.*/ }, async (args: any) => {
+      }); 
+ 
+      build.onLoad({ filter: /.*/ }, async (args) => {
         const cachedResult = await fileCache.getItem<esbuild.OnLoadResult>(
           args.path,
         );
@@ -32,13 +32,13 @@ export const fetchPlugin = (inputCode: string) => {
       });
 
       // Handle css file
-      build.onLoad({ filter: /.css$/ }, async (args: any) => {
+      build.onLoad({ filter: /.css$/ }, async (args) => { 
         const { data, request } = await Axios.get(args.path);
         const escaped = data
           .replace(/\n/g, '')
           .replace(/"/g, '\\"')
           .replace(/'/, "\\'");
-
+ 
         const contents = `
               const style = document.createElement('style');
               style.innerText = '${escaped}';
@@ -51,12 +51,12 @@ export const fetchPlugin = (inputCode: string) => {
           resolveDir: new URL('./', request.responseURL).pathname,
         };
 
-        await fileCache.setItem(args.path, result);
+        await fileCache.setItem(args.path, result); 
         return result;
       });
 
       // Handle js code
-      build.onLoad({ filter: /.*/ }, async (args: any) => {
+      build.onLoad({ filter: /.*/ }, async (args) => {
         // get req with the unpkg path received from onresolve
         // if not index.js is path fetch the content using axios which is the path for npm package in upkg
         const { data, request } = await Axios.get(args.path);
